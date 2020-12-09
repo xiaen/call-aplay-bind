@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bind</title>
+</head>
+
+<body>
+    <script>
+        // 实现bind
+        Function.prototype.bind1 = function (obj) {
+            // obj是要改成的‘this’
+            // 这个this是调用bind1的createCat、Cat2，保存到全局that变量中
+            let that = this;
+            let arr = Array.from(arguments)
+            arr.splice(0, 1)
+            function fnbind() {
+                arg = Array.from(arguments)
+                // 当作为构造函数的new时候，this和fnbind一样
+                // 普通调用的时候this指向window，和fnbind不一样
+                console.log(this instanceof fnbind);
+                console.log(this, 'this');
+                console.log(fnbind, 'fnbind');
+                // 我们已经实现apply，这里直接使用apply
+                // 使用apply改变this指向，判断是不是作为构造函数使用，两次的参数拼接起来，返回返回值
+                return that.apply(this instanceof fnbind ? this : obj, [...arr, ...arg])
+            }
+            // 通过Object.create()把原型链连接起来
+            // 通过判断是不是构造函数和链接原型链，这样cat3就可以使用createCat的miao方法
+            fnbind.prototype = Object.create(that.prototype)
+            // 返回这个函数，原生bind就是返回一个函数，而不是直接调用
+            return fnbind
+        }
+        function createCat(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        createCat.prototype.miao = function () {
+            console.log('喵');
+        }
+        let cat1 = {}
+        let Cat2 = createCat.bind1(cat1)
+        Cat2('wa', 1)
+        console.log(createCat, 'createCat');
+        console.log(cat1, 'cat1');
+        let cat3 = new Cat2('猫', 19)
+        console.log(cat3);
+        cat3.miao()
+    </script>
+</body>
+
+</html>
