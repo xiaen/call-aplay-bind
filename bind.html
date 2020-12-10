@@ -12,7 +12,7 @@
         // 实现bind
         Function.prototype.bind1 = function (obj) {
             // obj是要改成的‘this’
-            // 这个this是调用bind1的createCat、Cat2，保存到全局that变量中
+            // 这个this是调用bind1的createCat、Cat2，保存到that变量中
             let that = this;
             let arr = Array.from(arguments)
             arr.splice(0, 1)
@@ -24,7 +24,7 @@
                 console.log(this, 'this');
                 console.log(fnbind, 'fnbind');
                 // 我们已经实现apply，这里直接使用apply
-                // 使用apply改变this指向，判断是不是作为构造函数使用，两次的参数拼接起来，返回返回值
+                // 使用apply改变this指向，判断是不是作为构造函数使用，两次的参数（arr和arg）拼接起来，返回结果
                 return that.apply(this instanceof fnbind ? this : obj, [...arr, ...arg])
             }
             // 通过Object.create()把原型链连接起来

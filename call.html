@@ -31,14 +31,14 @@
             obj[ckey] = this;
 
             //-------------------------
-            //使用es6方法调用
+            //使用es6方法，传剩余参数，并调用
             //let arr = Array.from(arguments).slice(1)
             //let res = obj[ckey](...arr)
             //-------------------------
 
 
             //-------------------------
-            //不使用es6方法调用
+            //不使用es6方法，传剩余参数，并调用
             let arr = []
             for (let i = 1; i < arguments.length; i++) {
                 arr[i - 1] = `arguments[${i}]`;
@@ -48,6 +48,7 @@
 
             // 为了不影响原对象，调用完后，删除私有属性
             delete obj[ckey];
+            // 最后返回结果
             return res;
         }
         let cThis = {}

@@ -9,7 +9,7 @@
 
 <body>
     <script>
-        //实现aplay
+        //实现apply
         function fn(name, age) {
             this.name = name;
             this.age = age;
@@ -31,13 +31,13 @@
             obj[ckey] = this;
 
             //-------------------------
-            // 使用es6方法调用
+            // 使用es6方法，传剩余参数，并调用
             // let res = obj[ckey](...arr);
             //-------------------------
 
 
             //-------------------------
-            // 不使用es6方法调用
+            // 不使用es6方法，传剩余参数，并调用
             let newArr = []
             for (let i = 0; i < arr.length; i++) {
                 newArr[i] = `arr[${i}]`;
@@ -47,6 +47,7 @@
 
             // 为了不影响原对象，调用完后，删除私有属性
             delete obj[ckey];
+            // 最后返回结果
             return res;
         }
         let cThis = {}
